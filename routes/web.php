@@ -37,8 +37,12 @@ Route::group(['middleware' => 'guest'], function(){
 
 //user auth route
 Auth::routes(['verify' => true]);
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => ['auth','verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::PUT('/profile/name/{id}', [App\Http\Controllers\ProfileController::class, 'updateName'])->name('profile.update.name');
+    Route::PUT('/profile/email/{id}', [App\Http\Controllers\ProfileController::class, 'updateEmail'])->name('profile.update.email');
+    Route::PUT('/profile/password/{id}', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.update.password');
+    Route::get('/booktable', [App\Http\Controllers\BookTableController::class, 'index'])->name('booktable.index');
 });
 
 //admin auth route

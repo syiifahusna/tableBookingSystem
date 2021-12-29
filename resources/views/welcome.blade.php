@@ -10,6 +10,16 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    
+        <!--Style-->
+        <style>
+            .img-fluid{
+                width:100%; 
+                max-height: 500px; 
+                object-fit: cover;
+            }
+        </style>
     </head>
     <body>
         
@@ -49,24 +59,27 @@
                 
             </div>
         </nav>
-        <div class="container-fluid">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="container-fluid" style="margin:0px;padding:0px;">
+            <div id="carouselWelcome" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ asset('storage/img1.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="https://images.unsplash.com/photo-1582169505937-b9992bd01ed9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1110&q=80" class="img-fluid d-block w-100 " alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/img2.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1158&q=80" class="img-fluid d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset('storage/img3.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80" class="img-fluid d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1>Welcome</h1>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselWelcome" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselWelcome" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -190,7 +203,6 @@
                 </div>
             </form>
         </div>
-
         <div class="container-fluid m-0 p-0">
             <div class="footer bg-dark text-light text-center p-3">
                 <p>Created by Syifa</p>
