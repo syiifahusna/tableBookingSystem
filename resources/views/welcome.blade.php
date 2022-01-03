@@ -11,7 +11,6 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     
-    
         <!--Style-->
         <style>
             .img-fluid{
@@ -59,7 +58,7 @@
                 
             </div>
         </nav>
-        <div class="container-fluid" style="margin:0px;padding:0px;">
+        <div class="container-fluid">
             <div id="carouselWelcome" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">

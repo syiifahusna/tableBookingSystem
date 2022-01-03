@@ -39,10 +39,16 @@ Route::group(['middleware' => 'guest'], function(){
 Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth','verified']], function(){
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
     Route::PUT('/profile/name/{id}', [App\Http\Controllers\ProfileController::class, 'updateName'])->name('profile.update.name');
     Route::PUT('/profile/email/{id}', [App\Http\Controllers\ProfileController::class, 'updateEmail'])->name('profile.update.email');
     Route::PUT('/profile/password/{id}', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.update.password');
-    Route::get('/booktable', [App\Http\Controllers\BookTableController::class, 'index'])->name('booktable.index');
+
+    Route::get('/past_booking', [App\Http\Controllers\BookTableController::class, 'pastBookingIndex'])->name('booktable.pastBookingIndex');
+
+    Route::get('/book_table', [App\Http\Controllers\BookTableController::class, 'index'])->name('booktable.index');
+    Route::post('/book_table', [App\Http\Controllers\BookTableController::class, 'store'])->name('booktable.store');
+    Route::get('/ticket/{id}', [App\Http\Controllers\BookTableController::class, 'show'])->name('booktable.show');
 });
 
 //admin auth route

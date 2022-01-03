@@ -69,9 +69,16 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="min-vh-100 py-4">
             @yield('content')
         </main>
+
+        <div class="container-fluid m-0 p-0">
+            <div class="footer bg-dark text-light text-center p-3">
+                <p>Created by Syifa</p>
+            </div>
+        </div>
+    </div>
     </div>
 
     <!-- Scripts -->
