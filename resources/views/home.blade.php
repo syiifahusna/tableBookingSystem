@@ -38,7 +38,7 @@
                             @endforeach
                         </div>
                     @endif
-                    <div class="row py-3">
+                    <div class="row py-1">
                         <label for="name">Name</label>
                         <div class="col-10">
                             {{ auth()->user()->name }}
@@ -49,7 +49,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row py-3">
+                    <div class="row py-1">
                         <label for="email">Email</label>
                         <div class="col-10">
                         {{ auth()->user()->email }}
@@ -60,7 +60,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row py-3">
+                    <div class="row py-1">
                         <label for="password">Password</label>
                         <div class="col-10 text-danger fst-italic">
                                 password cannot be shown here

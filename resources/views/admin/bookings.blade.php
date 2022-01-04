@@ -5,16 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Admin Dashboard') }}</div>
+                <div class="card-header">{{ __('Bookings') }}</div>
 
-                <div class="card-body mb-3">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <h2>Today's Booking ({{ date("Y-m-d") }})</h2>
+                <div class="card-body">
                     <table class="table table-striped" id="tableBooking">
                         <thead>
                             <tr>
@@ -28,7 +21,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($todayBooking as $booking)
+                            @foreach($booking as $booking)
                             <tr>
                                 <td>{{ $booking->id }}</td> 
                                 <td><a href="{{ route('admin.user.show', $booking->user_id) }}">{{ $booking->name }} </a> </td> 

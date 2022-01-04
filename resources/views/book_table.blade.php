@@ -10,6 +10,12 @@
         background-color: #f7f7f7;
         color: #6c757d;
     }
+    
+    .active{
+        background-color: #f7f7f7;
+        color: #6c757d;
+    }
+
 </style>
 
 <div class="container-fluid p-3">
@@ -56,7 +62,7 @@
                     <div class="form-group">
                         <h5 class="card-title">Table</h5>
                         <div class="container w-75 bg-dark p-3 rounded">
-                            <div class="table w-25 p-5 m-3 d-inline-block">Table 1</div>
+                            <div class="table w-25 p-5 m-3 d-inline-block active">Table 1</div>
                             <div class="table w-50  p-5 m-3 d-inline-block">Table 2</div>
                             <div class="table w-50 p-5 m-3 d-inline-block">Table 3</div>
                             <div class="table w-25  p-5 m-3 d-inline-block">Table 4</div>
@@ -101,18 +107,21 @@
     bookingDate.setAttribute("min", year+"-"+month+"-"+ day); 
 
     //14 days from today
-    var lastDayBooking = objDate.getDate() + 14;
+    var lastDayBooking = (objDate.getDate() + 14);
     if (lastDayBooking.length < 2){ 
         lastDayBooking = '0' + lastDayBooking;
     }
     bookingDate.setAttribute("max", year+"-"+month+"-"+ lastDayBooking); 
 
     //select table
-    let table = document.getElementsByClassName("table");
     let selectedTable = document.getElementById("tableNo");
+    let table = document.getElementsByClassName("table");
     for(i=0;i<table.length;i++){
         table[i].addEventListener("click",function(){
+            let current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
             selectedTable.value = this.innerText;
+            this.className += " active";
         });
     }
 </script>

@@ -1,44 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    .dataTables_wrapper {
-        position: relative;
-    }
-
-    .dataTables_length,
-    .dataTables_filter,
-    .dataTables_info,
-    .dataTables_paginate {
-        display: inline-block;
-    }
-
-    .dataTables_filter {
-        position: absolute;
-        right: 0;
-    }
-
-    .dataTables_paginate {
-        position: absolute;
-        right: 0;
-    }
-
-    /*==========button Styling ==========*/
-    .paginate_button {
-        color: black;
-        float: left;
-        padding: 8px 16px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        border: 1px solid #ddd;
-    }
-
-    .paginate_button.current {
-        background-color: #0275d8;
-        color: white;
-        border: 1px solid #0275d8;
-    }
-</style>
 
 <div class="container p-3">
     <h1 class="text-center">Past Booking</h1>

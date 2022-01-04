@@ -30,7 +30,7 @@ Route::get('/contact', function () {
 });
 
 //guest
-Route::group(['middleware' => 'guest'], function(){
+Route::group(['middleware' => ['guest:web','guest:admin']], function(){
     Route::get('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'index'])->name('adminlogin.index');
     Route::post('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'login'])->name('adminlogin.login');
 });
@@ -54,5 +54,15 @@ Route::group(['middleware' => ['auth','verified']], function(){
 //admin auth route
 Route::group(['middleware'=> 'auth:admin','prefix'=>'admin','as'=>'admin.'], function(){
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::get('/menu', [App\Http\Controllers\Admin\MenuController::class, 'index'])->name('menu.index');
+    Route::get('/bookings', [App\Http\Controllers\Admin\BookingController::class, 'index'])->name('booking.index');
+    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
+    Route::get('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.show');
+    
+    Route::get('/admins', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.index');
+    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
+    
+
     Route::post('/logout', [App\Http\Controllers\Admin\AdminLoginController::class, 'logout'])->name('adminlogout');
 });

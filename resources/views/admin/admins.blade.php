@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Admin Dashboard') }}</div>
+                <div class="card-header">{{ __('Admins') }}</div>
 
                 <div class="card-body mb-3">
                     @if (session('status'))
@@ -13,30 +13,24 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <h2>Today's Booking ({{ date("Y-m-d") }})</h2>
-                    <table class="table table-striped" id="tableBooking">
+                    <table class="table table-striped" id="tableAdmin">
                         <thead>
                             <tr>
                                 <td>ID</td>
                                 <td>Name</td>
-                                <td>Date</td>
-                                <td>Time</td>
-                                <td>Guest</td>
-                                <td>Table</td>
-                                <td>Booking At</td>
+                                <td>Email</td>
+                                <td>Position</td>
+                                <td>Expire</td>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($todayBooking as $booking)
+                            @foreach($admin as $admin)
                             <tr>
-                                <td>{{ $booking->id }}</td> 
-                                <td><a href="{{ route('admin.user.show', $booking->user_id) }}">{{ $booking->name }} </a> </td> 
-                                <td>{{ $booking->booking_date }}</td>
-                                <td>{{ $booking->booking_time }}</td>
-                                <td>{{ $booking->total_guest }}</td>
-                                <td>{{ $booking->table_no }}</td>
-                                <td>{{ $booking->created_at }}</td>
+                                <td>{{ $admin->id }}</td> 
+                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td>
+                                <td>{{ $admin->position }}</td>
+                                <td>{{ $admin->expire }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -50,7 +44,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script>
-    let table = document.getElementById("tableBooking");
+    let table = document.getElementById("tableAdmin");
     let datatable = new DataTable(table);
     
     var order = datatable.order([[ 0, "desc" ]]);

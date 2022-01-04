@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('adminlogin.login') }}">
                         @csrf
                         @if (Session::get('fail'))
-                        <div class="row mb-3">
+                        <div class="col-9 mb-3 mx-auto">
                             <div class="alert alert-danger" role="alert">
                                 {{ Session::get('fail') }}
                             </div>

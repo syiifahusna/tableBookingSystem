@@ -16,6 +16,8 @@
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
+
 </head>
 <body>
     <div id="app">
@@ -44,12 +46,29 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item"> 
+                                <a href="{{ route('admin.dashboard.index') }}" class="nav-link" >Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.menu.index') }}" class="nav-link" >Menu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.booking.index') }}" class="nav-link" >Bookings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.user.index') }}" class="nav-link" >Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.admin.index') }}" class="nav-link" >Admins</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::guard('admin')->user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item" >Profile</a>
+                                
                                     <a class="dropdown-item" 
                                         href="{{ route('admin.adminlogout') }}"
                                         onclick="event.preventDefault();
@@ -57,7 +76,6 @@
                                     >
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('admin.adminlogout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>

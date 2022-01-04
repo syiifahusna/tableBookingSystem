@@ -1,15 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class MenuController extends Controller
 {
-     
     /**
      * Display a listing of the resource.
      *
@@ -17,17 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $today = date("Y-m-d");
-        
-        $todayBooking =  DB::table('user_bookings')
-        ->select('user_bookings.user_id','bookings.id','users.name','bookings.booking_date','bookings.booking_time','bookings.total_guest','bookings.table_no','bookings.created_at')
-        ->join('users', 'user_bookings.user_id', '=', 'users.id')
-        ->join('bookings', 'user_bookings.booking_id', '=', 'bookings.id')
-        ->where('bookings.booking_date','=', $today)
-        ->get();     
-
-        return view('admin.dashboard',['todayBooking' => $todayBooking]);
-        
+        return view('admin.menu');
     }
 
     /**

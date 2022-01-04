@@ -132,8 +132,6 @@ class BookTableController extends Controller
     public function show($id)
     {
         $ticket = Booking::find($id);
-
-
         return view('ticket')->with(['ticket' => $ticket]);
     }
 

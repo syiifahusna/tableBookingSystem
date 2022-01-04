@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 
+
 use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +19,7 @@ class AdminLoginController extends Controller
      */
     public function index()
     {
+
         return view('admin.auth.login');
     }
 
