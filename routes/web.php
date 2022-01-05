@@ -13,56 +13,68 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::GET('/', function () {
     return view('welcome');
 });
 
-Route::get('/menu', function () {
-    return view('menu');
+Route::GET('/menu', function () {
+    
+    $dishes = App\Models\Dishes::orderBy('id','desc')->get();    
+    $menu = App\Models\Menu::orderBy('id','desc')->get();
+
+    return view('menu',['menu'=>$menu,'dishes'=>$dishes]);
 });
 
-Route::get('/about', function () {
+Route::GET('/about', function () {
     return view('about');
 });
 
-Route::get('/contact', function () {
+Route::GET('/contact', function () {
     return view('contact');
 });
 
 //guest
 Route::group(['middleware' => ['guest:web','guest:admin']], function(){
-    Route::get('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'index'])->name('adminlogin.index');
-    Route::post('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'login'])->name('adminlogin.login');
+    Route::GET('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'index'])->name('adminlogin.index');
+    Route::POST('/admin', [App\Http\Controllers\Admin\AdminLoginController::class, 'login'])->name('adminlogin.login');
 });
 
 //user auth route
 Auth::routes(['verify' => true]);
 Route::group(['middleware' => ['auth','verified']], function(){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::GET('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
     Route::PUT('/profile/name/{id}', [App\Http\Controllers\ProfileController::class, 'updateName'])->name('profile.update.name');
     Route::PUT('/profile/email/{id}', [App\Http\Controllers\ProfileController::class, 'updateEmail'])->name('profile.update.email');
     Route::PUT('/profile/password/{id}', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.update.password');
 
-    Route::get('/past_booking', [App\Http\Controllers\BookTableController::class, 'pastBookingIndex'])->name('booktable.pastBookingIndex');
+    Route::GET('/past_booking', [App\Http\Controllers\BookTableController::class, 'pastBookingIndex'])->name('booktable.pastBookingIndex');
 
-    Route::get('/book_table', [App\Http\Controllers\BookTableController::class, 'index'])->name('booktable.index');
-    Route::post('/book_table', [App\Http\Controllers\BookTableController::class, 'store'])->name('booktable.store');
-    Route::get('/ticket/{id}', [App\Http\Controllers\BookTableController::class, 'show'])->name('booktable.show');
+    Route::GET('/book_table', [App\Http\Controllers\BookTableController::class, 'index'])->name('booktable.index');
+    Route::POST('/book_table', [App\Http\Controllers\BookTableController::class, 'store'])->name('booktable.store');
+    Route::GET('/ticket/{id}', [App\Http\Controllers\BookTableController::class, 'show'])->name('booktable.show');
 });
 
 //admin auth route
 Route::group(['middleware'=> 'auth:admin','prefix'=>'admin','as'=>'admin.'], function(){
-    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
+    Route::GET('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/menu', [App\Http\Controllers\Admin\MenuController::class, 'index'])->name('menu.index');
-    Route::get('/bookings', [App\Http\Controllers\Admin\BookingController::class, 'index'])->name('booking.index');
-    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
-    Route::get('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.show');
+    Route::GET('/menu', [App\Http\Controllers\Admin\MenuController::class, 'index'])->name('menu.index');
+    Route::POST('/menu', [App\Http\Controllers\Admin\MenuController::class, 'store'])->name('menu.store');
+    Route::PUT('/menu/{id}', [App\Http\Controllers\Admin\MenuController::class, 'update'])->name('menu.update');
+    Route::DELETE('/menu/{id}', [App\Http\Controllers\Admin\MenuController::class, 'destroy'])->name('menu.destroy');
+
+    Route::POST('/dish', [App\Http\Controllers\Admin\MenuController::class, 'storeDish'])->name('dish.store');
+    Route::PUT('/dish/{id}', [App\Http\Controllers\Admin\MenuController::class, 'updateDish'])->name('dish.update');
+    Route::DELETE('/dish/{id}', [App\Http\Controllers\Admin\MenuController::class, 'destroyDish'])->name('dish.destroy');
     
-    Route::get('/admins', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.index');
-    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
+    Route::GET('/bookings', [App\Http\Controllers\Admin\BookingController::class, 'index'])->name('booking.index');
+    Route::GET('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
+    Route::GET('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.show');
+    
+    Route::GET('/admins', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.index');
+    Route::GET('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
     
 
-    Route::post('/logout', [App\Http\Controllers\Admin\AdminLoginController::class, 'logout'])->name('adminlogout');
+    Route::POST('/logout', [App\Http\Controllers\Admin\AdminLoginController::class, 'logout'])->name('adminlogout');
 });

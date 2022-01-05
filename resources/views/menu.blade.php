@@ -76,249 +76,66 @@
 
 <div class="container-fluid">
     <h1 class="text-center">We Serve</h1>
-    <div class="py-5">
-        <h3 class="text-center">Breakfast</h3>
-        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-
-        <!-- Carousel wrapper -->
-        <div id="carouselMultiItemBreakfast" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-            <!-- Controls -->
-            <div class="d-flex justify-content-center mb-4">
-                <button type="button" class="carousel-control-prev position-relative" data-mdb-target="#carouselMultiItemBreakfast" data-mdb-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button type="button" class="carousel-control-next position-relative"  data-mdb-target="#carouselMultiItemBreakfast" data-mdb-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <!-- Inner -->
-            <div class="carousel-inner py-4">
-                <!-- Single item -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1586511934875-5c5411eebf79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
+    <p class="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+    
+    @foreach($menu as $m)
+        <div class="py-5">
+            <h3 class="text-center">{{ $m->menu_name }}</h3>       
+            <!-- Carousel wrapper -->
+            <div id="carouselMultiItem{{ $m->id }}" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+                <!-- Controls -->
+                <div class="d-flex justify-content-center mb-4">
+                    <button type="button" class="carousel-control-prev position-relative" data-mdb-target="#carouselMultiItem{{ $m->id }}" data-mdb-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button type="button" class="carousel-control-next position-relative"  data-mdb-target="#carouselMultiItem{{ $m->id }}" data-mdb-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <!-- Inner -->
+                <div class="carousel-inner py-4">
+                    @php
+                        $menu_id = $m->id;
+                        $filtered = $dishes->filter(function ($dishes) use ($menu_id) {
+                            return ($dishes->menu_id == $menu_id);
+                        });
+                        
+                        //divide to every 3 arr, return multidementional array
+                        $chunk = $filtered->chunk(3);
+                    @endphp
+                    
+                    @foreach($chunk as $dish => $val)
+                        <!-- Single item -->
+                        <div class="carousel-item">
+                            <div class="container">
+                                <div class="row">
+                                    @foreach($val as $d)
+                                        <div class="col-md-4">
+                                            <div class="hover hover-2 text-white rounded">
+                                                <img src="{{ asset('storage/food/'. $d->image)}}" alt="">
+                                                <div class="hover-overlay"></div>
+                                                <div class="hover-2-content px-5 py-4">
+                                                    <h3 class="hover-2-title text-uppercase text-center"> {{ $d->dish_name }} </h3>
+                                                    <p class="hover-2-description text-uppercase mb-0">
+                                                        RM {{ number_format( $d->price, 2) }}
+                                                        <br>
+                                                        {{ $d->desc }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Single item -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1586511934875-5c5411eebf79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-            <!-- Inner -->
         </div>
-        <!-- Carousel wrapper -->
-    </div>
-    <div class="py-5">
-        <h3 class="text-center">Lunch</h3>
-        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    @endforeach
 
-        <!-- Carousel wrapper -->
-        <div id="carouselMultiItemLunch" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-            <!-- Controls -->
-            <div class="d-flex justify-content-center mb-4">
-                <button type="button" class="carousel-control-prev position-relative" data-mdb-target="#carouselMultiItemLunch" data-mdb-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button type="button" class="carousel-control-next position-relative"  data-mdb-target="#carouselMultiItemLunch" data-mdb-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <!-- Inner -->
-            <div class="carousel-inner py-4">
-                <!-- Single item -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1478144592103-25e218a04891?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single item -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1478144592103-25e218a04891?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Inner -->
-        </div>
-        <!-- Carousel wrapper -->
-    </div>
-    <div class="py-5">
-        <h3 class="text-center">Dinner</h3>
-        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-
-        <!-- Carousel wrapper -->
-        <div id="carouselMultiItemDinner" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-            <!-- Controls -->
-            <div class="d-flex justify-content-center mb-4">
-                <button type="button" class="carousel-control-prev position-relative" data-mdb-target="#carouselMultiItemDinner" data-mdb-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button type="button" class="carousel-control-next position-relative"  data-mdb-target="#carouselMultiItemDinner" data-mdb-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <!-- Inner -->
-            <div class="carousel-inner py-4">
-                <!-- Single item -->
-                <div class="carousel-item">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1600335895229-6e75511892c8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="hover hover-2 text-white rounded"><img src="https://images.unsplash.com/photo-1478144592103-25e218a04891?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80" alt="">
-                                <div class="hover-overlay"></div>
-                                <div class="hover-2-content px-5 py-4">
-                                    <h3 class="hover-2-title text-uppercase text-center"> <span class="font-weight-light">Image </span>Caption</h3>
-                                    <p class="hover-2-description text-uppercase mb-0">Lorem ipsum dolor sit amet, consectetur <br>adipisicing elit.</p>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Inner -->
-        </div>
-        <!-- Carousel wrapper -->
-    </div>
 </div>
 
 

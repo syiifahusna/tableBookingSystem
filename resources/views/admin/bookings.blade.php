@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Bookings') }}</div>
 
-                <div class="card-body">
+                <div class="card-body mb-3">
                     <table class="table table-striped" id="tableBooking">
                         <thead>
                             <tr>
