@@ -30,15 +30,34 @@ class AdminLoginController extends Controller
             'password'=>['required']
         ]);
 
-        $credential = $request->only('email','password');
+        //find the account
+        $admin = Admin::where('email',$request->email)->first();
 
-        if(Auth::guard('admin')->attempt($credential)){
-
-            return redirect()->route('admin.dashboard.index');
+        //if account exist
+        if($admin){
+            //get the expire date
+            $expire = $admin->expire;
+            $today = date('Y-m-d', time());
+            
+            if ($expire < $today) {
+                //account expired
+                return redirect()->route('adminlogin.index')->with('fail','Login Fail');                
+            }else{
+                //account not expire
+                $credential = $request->only('email','password');
+    
+                if(Auth::guard('admin')->attempt($credential)){
+                    return redirect()->route('admin.dashboard.index');
+                }else{
+                    return redirect()->route('adminlogin.index')->with('fail','Login Fail');
+                }
+            }
 
         }else{
+            
             return redirect()->route('adminlogin.index')->with('fail','Login Fail');
         }
+
     }
 
     protected function logout(Request $request)

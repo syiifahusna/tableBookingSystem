@@ -60,10 +60,11 @@ class ProfileController extends Controller
         $profile = User::find($id);
 
         if($profile){
+            //if old password match
             $checkPassword = Hash::check($request->password, $profile->password);
             if($checkPassword){
+                //make new password
                 $newPassword = Hash::make($request->newPassword);
-
                 $profile->password = $newPassword;
                 $profile->save();
 

@@ -73,6 +73,8 @@ Route::group(['middleware'=> 'auth:admin','prefix'=>'admin','as'=>'admin.'], fun
     Route::GET('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('user.show');
     
     Route::GET('/admins', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.index');
+    Route::POST('/admins', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('admin.store');
+    
     Route::GET('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile.index');
     
 

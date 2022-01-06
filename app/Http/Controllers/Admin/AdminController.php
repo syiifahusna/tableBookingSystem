@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -18,6 +20,7 @@ class AdminController extends Controller
     {
         $admin =  DB::table('admins')
         ->select('id','name','email','position','expire')
+        ->orderBy('id','desc')
         ->get();  
 
         return view('admin.admins',['admin' => $admin]);
@@ -41,7 +44,33 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=> ['required','string','max:255'],
+            'email'=> ['required','email','max:255'],
+            'password'=> ['required','string','min:5','max:255'],
+            'position'=> ['required','string','max:255'],
+            'expire'=> ['required','string','max:255'],
+        ]);
+
+        
+        $admin = Admin::where('email', '=', $request->email)->first();
+        //if email already exist
+        if($admin){
+            return redirect(route('admin.admin.index'))->with('fail', 'Email Already Exist');
+        }else{
+
+            //create new admin
+            $newAdmin = new Admin;
+            $newAdmin->name = ucwords($request->name);
+            $newAdmin->email = $request->email;
+            $newAdmin->password = Hash::make($request->password);
+            $newAdmin->position = $request->position;
+            $newAdmin->expire = $request->expire;
+            $newAdmin->save();
+
+            return redirect(route('admin.admin.index'))->with('success', 'New Admin Added Successfully');
+        }
+
     }
 
     /**
